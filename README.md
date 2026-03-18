@@ -1,6 +1,6 @@
 Simulation of a tensile test pull with a notch  
 Elmer + mfront material model  
-mfront must be instaled, compiled, and coupled with Elmer simial to  
+mfront must be instaled, compiled, and coupled with Elmer similar to  
   https://www.elmerfem.org/forum/viewtopic.php?t=8887  
 Problem Description in PDF
 
