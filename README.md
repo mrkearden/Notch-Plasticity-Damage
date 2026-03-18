@@ -4,8 +4,7 @@ mfront must be instaled, compiled, and coupled with Elmer similar to
   https://www.elmerfem.org/forum/viewtopic.php?t=8887  
 Problem Description in PDF  
 Note that sif also includes a user created UMAT for areas outside the notch.
-If 1 body has a UMAT all bodies must have a UMAT, and the body UMATS can come  
-from different libraries.
+If 1 body has a UMAT all bodies must have a UMAT, and the body UMATS can come from different libraries.
 
  stress animation  
   ![Demo](images/stress.gif)  
