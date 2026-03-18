@@ -1,0 +1,7 @@
+! ----- names for bodies -----
+$ body1 = 1
+$ ends = 2
+! ----- names for boundaries -----
+$ bnry2 = 1
+$ left = 2
+$ right = 3
