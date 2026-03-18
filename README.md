@@ -1,5 +1,5 @@
 Simulation of a tensile test pull with a notch  
-Elmer + mfron material model  
+Elmer + mfront material model  
 
  stress animation  
   ![Demo](images/stress.gif)  
