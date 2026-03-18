@@ -1,0 +1,121 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "mesh"
+  Include Path ""
+  Results Directory "damage_res2"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = "Cartesian 2D"
+  Coordinate Mapping(3) = 1 2 3
+
+  Simulation Type = Scanning
+timestep intervals(4) = 4 16 10 100
+timestep sizes(4) = 0.04 0.02 0.001 .0001
+output intervals(4) = 1 1 1 1
+
+! two steps to yield
+!timestep intervals = 2
+!timestep sizes = 0.1
+!output intervals = 1
+
+  Post File = "adapt.vtu"
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.670374419e-08
+  Permittivity of Vacuum = 8.85418781e-12
+  Permeability of Vacuum = 1.25663706e-6
+  Boltzmann Constant = 1.380649e-23
+  Unit Charge = 1.6021766e-19
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body 1"
+  Equation = 1
+  Material = 1
+End
+
+Body 2
+
+  Target Bodies(1) = 2
+  Name = "Body 2"
+  Equation = 1
+  Material = 2
+End
+
+Solver 1
+element="p:2"
+  Equation = Linear elasticity
+  Procedure = "ElasticSolve" "ElasticSolver"
+  Calculate Stresses = True
+  Exec Solver = Always
+  Stabilize = True
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-4
+  Nonlinear System Convergence Tolerance = 1.0e-3
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = MUMPS
+  Calculate Stresses = True
+  Calculate Strains = True
+Displace Mesh = True
+End
+
+Equation 1
+  Name = "Equation 1"
+  Active Solvers(1) = 1
+End
+
+Material 1
+
+! UMAT test
+  Number of Material Constants = Integer 5
+  Number of State Variables = Integer 1
+  ! List material constants as {}:
+ Material Constants(5) = Real 210000.0 0.30 50 0.0017 2 
+  Density = 0.0
+  Reference Temperature = 270.0
+  UMAT Subroutine = File "/home/titan/tfel/src/libABAQUSBEHAVIOUR" "FICHANTLABORDERIEDAMAGEBEHAVIOUR_PSTRAIN"
+  Name = "FICHANTLABORDERIEDAMAGEBEHAVIOUR_PSTRAIN"  ! This specifies the CMNAME argument of UMAT!
+
+End
+
+Material 2
+
+! UMAT test
+  Number of Material Constants = Integer 6
+  Number of State Variables = Integer 7
+  ! List material constants as {}:
+  Material Constants(6) = Real .3 0.0009562 800.0 1.0 1610.0 1610.0
+density = 0.0
+
+UMAT Subroutine = File "myUMATLib" "bi_linear"
+
+  Name = "bi_linear"  ! This specifies the CMNAME argument of UMAT
+!
+End
+
+
+Boundary Condition 1
+  Target Boundaries(1) = 2
+  Name = "BoundaryCondition 1"
+  Displacement 1 = 0
+  Displacement 2 = 0
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 3
+  Name = "BoundaryCondition 2"
+  Displacement 2 = 0
+  Displacement 1 = variable time
+    Real Procedure "DispCont" "disp"
+End
+
+
